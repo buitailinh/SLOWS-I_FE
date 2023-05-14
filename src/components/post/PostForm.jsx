@@ -107,7 +107,7 @@ function PostForm({ onClose, content, photo }) {
           const response = await api.post(postRoute,formData,  {
             headers: {
               'Content-Type': 'multipart/form-data',
-              "Authorization": `Bearer ${localStorage.getItem('access_token')}`,
+              "Authorization": `Bearer ${localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)}`,
             }
           });
           alert('Success');

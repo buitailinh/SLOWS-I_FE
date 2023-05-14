@@ -24,7 +24,7 @@ const CreatePost = () => {
   });
 
   useEffect(() => {
-      if (!localStorage.getItem('access_token')) {
+      if (!localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)) {
         navigate("/login");
       }
     }, []);
@@ -83,7 +83,7 @@ const CreatePost = () => {
           method: 'POST',
           headers: {
             // 'Content-Type': 'application/json',
-            "Authorization": `Bearer ${localStorage.getItem('access_token')}`,
+            "Authorization": `Bearer ${localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)}`,
           },
           body: formData,
         });

@@ -14,9 +14,9 @@ function LoginGG() {
   
 
   useEffect(() =>{
-  localStorage.setItem('access_token', data.token.accessToken);
-  localStorage.setItem('refresh_token', data.token.refreshToken)
-  const accessToken = localStorage.getItem('access_token');
+  localStorage.setItem(import.meta.env.REACT_APP_NAME_AT_KEY, data.token.accessToken);
+  localStorage.setItem(import.meta.env.REACT_APP_NAME_RF_KEY, data.token.refreshToken)
+  const accessToken = localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY);
   if(accessToken){
     // navigate("/");
     window.location.href = '/';

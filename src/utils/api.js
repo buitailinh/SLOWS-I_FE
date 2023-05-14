@@ -10,7 +10,7 @@ const instance = axios.create({
 });
 
 const refreshToken = async () => {
-  const refreshToken = localStorage.getItem('refresh_token');
+  const refreshToken = localStorage.getItem(import.meta.env.REACT_APP_NAME_RF_KEY);
   if (!refreshToken) {
     window.location.href='/login';
   }
@@ -19,7 +19,7 @@ const refreshToken = async () => {
     const response = await axios.post(refreshTokenRoute, { refreshToken });
     const newAccessToken = response.data.accessToken;
     console.log('rf new:',newAccessToken)
-    localStorage.setItem('access_token', newAccessToken);
+    localStorage.setItem(import.meta.env.REACT_APP_NAME_AT_KEY, newAccessToken);
 
     return true;
   } catch (refreshError) {
@@ -29,7 +29,7 @@ const refreshToken = async () => {
 
 instance.interceptors.request.use(
   config => {
-    const accessToken = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY);
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -46,7 +46,7 @@ instance.interceptors.response.use(
       const refreshed = await refreshToken();
       if (refreshed) {
         const originalRequest = error.config;
-        originalRequest.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
+        originalRequest.headers.Authorization = `Bearer ${localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)}`;
         return instance.request(originalRequest);
       }
     }

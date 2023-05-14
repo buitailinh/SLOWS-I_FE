@@ -24,7 +24,7 @@ function PostsWidget({ userId, isProfile = false }) {
     try {
       const response = await api.get(postMeRoute, {
         method: "GET",
-        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)}` },
       });
       const data = response.data;
 

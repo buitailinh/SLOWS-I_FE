@@ -2,7 +2,7 @@ import { io } from "socket.io-client";
 
 const socket = io("http://localhost:8888",{
     auth: {
-      accessToken: localStorage.getItem('access_token')
+      accessToken: localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)
     }
   });
 

@@ -7,7 +7,7 @@ const AppProvider = ({ children }) => {
   const [auth, setAuth] = useState(false);
   const [token, setToken] = useState(null);
   const [info, setInfo] = useState(undefined);
-  const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
+  const [accessToken, setAccessToken] = useState(localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY));
 
   useEffect(() => {
           if (accessToken) {

@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     replace({
-      'process.env.REACT_APP_LOCALHOST_KEY': JSON.stringify(process.env.REACT_APP_LOCALHOST_KEY),
+      'process.env.REACT_APP_LOCALHOST_KEY': JSON.stringify(process.env.REACT_APP_AT_KEY),
       'process.env.GOOGLE_CLIENT_ID': JSON.stringify(process.env.GOOGLE_CLIENT_ID),
       preventAssignment: true,
     }),
