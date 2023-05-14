@@ -14,7 +14,7 @@ const refreshToken = async () => {
   if (!refreshToken) {
     window.location.href='/login';
   }
-
+  else{
   try {
     const response = await axios.post(refreshTokenRoute, { refreshToken });
     const newAccessToken = response.data.accessToken;
@@ -24,6 +24,7 @@ const refreshToken = async () => {
     return true;
   } catch (refreshError) {
     throw refreshError;
+  }
   }
 };
 
@@ -43,6 +44,7 @@ instance.interceptors.response.use(
   response => response,
   async error => {
     if (error.response.status === 401 && error.response.data.message === 'Unauthorized') {
+
       const refreshed = await refreshToken();
       if (refreshed) {
         const originalRequest = error.config;
