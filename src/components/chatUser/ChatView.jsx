@@ -15,7 +15,7 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import { AppContext } from './../../utils/context';
 import socket from '../../utils/socket';
 import Hero from '../chatAI/Hero';
-import ChatInputForm from '../Chat/ChatInputForm';
+import ChatInputForm from '../chat/ChatInputForm';
 import api from '../../utils/api';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
