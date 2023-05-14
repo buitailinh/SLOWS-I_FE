@@ -6,7 +6,7 @@ import { getRandomPrompt } from '../utils';
 import { FormField, Loader } from '../components';
 import { dalleRoute, dallePostRoute} from '../utils/APIRoutes'
 import { AppContext } from '../utils/context';
-import Notification from '../utils/notification';
+import Notification from '../utils/Notification';
 import formatFile from '../utils/formatFile';
 import FloatingButton from '../components/post/FloatingButton';
 

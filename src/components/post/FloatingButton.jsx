@@ -1,6 +1,6 @@
 import React,{ useState, useRef  } from 'react';
 import PostForm from './PostForm';
-import Notification from '../../utils/notification';
+import Notification from '../../utils/Notification';
 
 function FloatingButton({ content, photo}) {
     const [showForm, setShowForm] = useState(false);
