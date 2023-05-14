@@ -30,7 +30,7 @@ const Home = () => {
       const response = await api.get(dallePostRoute, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          "Authorization": `Bearer ${localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)}`,
+          "Authorization": `Bearer ${localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY)}`,
         },
       });
 

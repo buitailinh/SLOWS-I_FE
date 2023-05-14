@@ -26,7 +26,7 @@ export default function SetAvatar() {
 
   useEffect(() => {
     const loadData = async () => {
-    if (!localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)) 
+    if (!localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY)) 
       navigate("/login");
     };
     loadData();
@@ -44,16 +44,16 @@ export default function SetAvatar() {
       {
         headers: {
           'Content-Type': 'multipart/form-data',
-          "Authorization": `Bearer ${localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)}`,
+          "Authorization": `Bearer ${localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY)}`,
         },
       });
       if (data.status === false) {
         toast.error(data.msg, toastOptions);
       }
       if (data.status === true) {
-        localStorage.setItem(import.meta.env.REACT_APP_NAME_AT_KEY, data.token.accessToken);
-        localStorage.setItem(import.meta.env.REACT_APP_NAME_RF_KEY, data.token.refreshToken)
-        const accessToken = localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY);
+        localStorage.setItem(import.meta.env.VITE_NAME_AT_KEY, data.token.accessToken);
+        localStorage.setItem(import.meta.env.VITE_NAME_RF_KEY, data.token.refreshToken)
+        const accessToken = localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY);
         if(accessToken){
           // console.log(accessToken);
           setTimeout(() => {  window.location.reload(); }, 100)

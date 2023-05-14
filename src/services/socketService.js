@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 
 class SocketService {
   constructor() {
-    this.socket = io('ws://localhost:8888', {
+    this.socket = io(`ws://${import.meta.env.VITE_SOCKET_HOST}`, {
       autoConnect: false,
     });
   }

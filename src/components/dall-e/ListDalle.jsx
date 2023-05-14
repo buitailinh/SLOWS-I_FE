@@ -21,6 +21,8 @@ function ListDalle() {
             setIsLoadingMore(true);
           }
           try {
+
+            console.log('search: ', `${dalleRoute}/me`);
             const response = await api.get(`${dalleRoute}/me`);
 
             console.log('dalle:', response);

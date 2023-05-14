@@ -1,8 +1,8 @@
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:8888",{
+const socket = io(import.meta.env.VITE_BACKEND_HOST,{
     auth: {
-      accessToken: localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)
+      accessToken: localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY)
     }
   });
 

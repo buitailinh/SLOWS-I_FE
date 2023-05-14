@@ -83,7 +83,7 @@ function SinglePostWidget(
       const response = await fetch(postUpdateLikesRoute + `/${postId}`, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)}`,
+          Authorization: `Bearer ${localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY)}`,
           "Content-Type": "application/json",
         },
       });
@@ -98,7 +98,7 @@ function SinglePostWidget(
     const response = await api.get(`${inforUserRoute}/${userId}`,{
       method: "GET",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)}`,
+        Authorization: `Bearer ${localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY)}`,
         "Content-Type": "application/json",
       },
     });

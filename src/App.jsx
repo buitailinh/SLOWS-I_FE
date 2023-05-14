@@ -36,7 +36,7 @@ const App = () => {
   // user manually refesher browser after login
    useEffect(() => {
 
-    const accessToken = localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY);
+    const accessToken = localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY);
           // console.log('abc');
           if (accessToken) {
             // setToken(accessToken);

@@ -9,7 +9,7 @@ function ButtonLoginGG({ onSuccess, onFailure }) {
     onSuccess={onSuccess}
     onFailure={onFailure}
     cookiePolicy={'single_host_origin'}
-    redirectUri={'http://localhost:8888/auth/google'}
+    redirectUri={`${import.meta.env.VITE_BACKEND_HOST}/auth/google`}
   />
   )
 }

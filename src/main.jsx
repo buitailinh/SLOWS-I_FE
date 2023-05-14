@@ -20,7 +20,8 @@ import {
 } from "redux-persist"
 import { CircularProgress } from "@mui/material";
 import storage from 'redux-persist/lib/storage';
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 const persistConfiguration = {
   key: "root",

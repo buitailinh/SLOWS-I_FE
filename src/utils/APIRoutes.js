@@ -1,4 +1,4 @@
-export const host  = import.meta.env.BACKEND_HOST || "http://localhost:8888/api/v1";
+export const host  = `${import.meta.env.VITE_BACKEND_HOST}/api/v1` || "http://localhost:8888/api/v1";
 export const registerRoute = `${host}/auth/register`;
 export const loginRoute = `${host}/auth/login`;
 export const setAvatarRoute = `${host}/auth/setAvatar`;

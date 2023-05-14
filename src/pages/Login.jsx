@@ -31,7 +31,7 @@ export default function Login() {
     theme: "dark",
   };
   useEffect(() => {
-    if (localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)) {
+    if (localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY) && localStorage.getItem(import.meta.env.VITE_NAME_RF_KEY)) {
       navigate("/");
     }
   }, []);
@@ -94,9 +94,9 @@ export default function Login() {
         toast.error(data.msg, toastOptions);
       }
       if (data.status === true) {
-        localStorage.setItem(import.meta.env.REACT_APP_NAME_AT_KEY, data.token.accessToken);
-        localStorage.setItem(import.meta.env.REACT_APP_NAME_RF_KEY, data.token.refreshToken)
-        const accessToken = localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY);
+        localStorage.setItem(import.meta.env.VITE_NAME_AT_KEY, data.token.accessToken);
+        localStorage.setItem(import.meta.env.VITE_NAME_RF_KEY, data.token.refreshToken)
+        const accessToken = localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY);
         if(accessToken){
           // console.log(accessToken);
           setTimeout(() => {  window.location.reload(); }, 500)

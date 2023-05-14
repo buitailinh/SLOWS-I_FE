@@ -8,7 +8,7 @@ function Profile() {
     const navigate = useNavigate();
     useEffect( async() => {
 
-        if (!localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)) {
+        if (!localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY)) {
           navigate("/login");
         };
 
@@ -18,7 +18,7 @@ function Profile() {
       },
             {headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)}`,
+              'Authorization': `Bearer ${localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY)}`,
             }}
         );
 

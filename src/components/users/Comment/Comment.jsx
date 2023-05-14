@@ -227,7 +227,7 @@ function Comment({ postId, commentCount, isNonMobileScreens, commentData }) {
         try {
           const response = await fetch(postCommentsRoute + `/${postId}`, {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem(import.meta.env.REACT_APP_NAME_AT_KEY)}`,
+              Authorization: `Bearer ${localStorage.getItem(import.meta.env.VITE_NAME_AT_KEY)}`,
               "Content-Type": "application/json",
             },
           });
