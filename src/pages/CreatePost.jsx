@@ -102,7 +102,7 @@ const CreatePost = () => {
   };
 
   return (
-    <section className="h-screen mx-auto bg-[url('../../bgHeader2.jpg')] overflow-y-auto bg-cover bg-no-repeat bg-center bg-fixed">
+    <section className="h-screen mx-auto overflow-y-auto bg-cover bg-no-repeat bg-center bg-fixed" style={{ backgroundImage: "url('../../bgHeader2.jpg')" }}>
       <div className='p-20 pb-5'>
         <h1 className="font-extrabold text-[#222328] text-[32px]">Search for the photos you want</h1>
         <p className="mt-2 text-[#666e75] text-[14px] max-w-[450px]">Generate an imaginative image through DALL-E AI and share it with the community</p>

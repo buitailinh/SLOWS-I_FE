@@ -35,7 +35,7 @@ function SendEmail() {
   };
 
   return (
-    <div className="flex flex-col items-center pt-20 h-screen bg-[url('../../public/bgsend.jpg')]">
+    <div className="flex flex-col items-center pt-20 h-screen"  style={{ backgroundImage: "url('../../bgsend.jpg')" }}>
         
       <img src="../../public/sendMail.png" alt="Mail Icon" className="h-45 w-45" />
       <h1 className="text-3xl font-bold text-white mt-8">

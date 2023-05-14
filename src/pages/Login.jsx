@@ -7,9 +7,9 @@ import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loginGGRoute, loginRoute } from "../utils/APIRoutes";
-import GoogleSvg from "../utils/GoogleSvg"
-import FacebookSvg from "../utils/FacebookSvg"
-import GithubSvg from "../utils/GithubSvg"
+import GoogleSvg from "../utils/GoogleSVG"
+import FacebookSvg from "../utils/FacebookSVG"
+import GithubSvg from "../utils/GithubSVG"
 import { validateEmail, validatePassword } from '../constant/validate';
 
 
