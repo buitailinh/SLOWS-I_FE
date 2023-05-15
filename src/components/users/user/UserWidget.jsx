@@ -33,7 +33,7 @@ import socket from '../../../utils/socket';
 import NotificationBlockUser from './NotificationBlockUser';
 
 
-function UserWidget({ username,userId, profilePhotoUrl }) {
+function UserWidget({ username,userId, profilePhotoUrl, status, action, actionYou }) {
 
   const { id } = useParams();
   const location = useLocation();
@@ -258,7 +258,8 @@ function UserWidget({ username,userId, profilePhotoUrl }) {
               {username}
             </Typography>
             <FlexBetween paddingTop="0.4rem" width="6rem">
-              <FlexBetween>
+              { !status && <>
+                <FlexBetween>
                 <Typography color={dark} marginRight="0.25rem">
                   {followerCount}
                 </Typography>
@@ -273,7 +274,8 @@ function UserWidget({ username,userId, profilePhotoUrl }) {
                   following
                 </Typography>
               </FlexBetween>}
-              
+              </>}
+
             </FlexBetween>
           </Box>
         </FlexBetween>
@@ -284,7 +286,8 @@ function UserWidget({ username,userId, profilePhotoUrl }) {
           <Box  sx={{ display:'flex', flexDirection: "row",
           alignItems: "center",
           justifyContent: "center"}} >
-          <Box sx={{
+          { !status && <>
+            <Box sx={{
             width: "25px",
             height: "25px",
             alignItems: 'center',
@@ -331,7 +334,8 @@ function UserWidget({ username,userId, profilePhotoUrl }) {
           {followingStatus}
           </Box>
           </Box>
-
+          </>}
+          
           <Box sx={{ textAlign:'center', "&:hover": {
                   color: 'blueviolet',
                   cursor: "pointer",
@@ -349,7 +353,7 @@ function UserWidget({ username,userId, profilePhotoUrl }) {
             <BlockIcon sx={{ color: dark, fontSize: '14px' }} />
             </IconButton>
             <Box fontSize='6px'>
-          Block
+                { actionYou ? "Unblock": "Block" } 
           </Box>
           </Box>
           <Menu
@@ -375,8 +379,16 @@ function UserWidget({ username,userId, profilePhotoUrl }) {
         transformOrigin={{ horizontal: 'center', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
       >
-      
-        <MenuItem className=' text-xs' onClick={()=>handleNotifiBlock(1)}>
+      { actionYou ? 
+         <MenuItem className=' text-xs' onClick={()=>handleNotifiBlock(6)}>
+         <ListItemIcon>
+           <img className='w-5 h-5' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAACz0lEQVR4nO2YTUgVURTHf/WyooyKQoo+EKNFELWoRYZJYo8KaxFmWQS5SkFzYxG06HMTBUVRC5WWRpQULaJAiLBNC2vTrsigVkEfthCqRcqB82AY7r3PN+PM9dH84A/Hud7z7n/u3LnnDmRkZGRk/AesB0YcupHGII4CdTFzLAFaHKojBTYDa2PmWA3c1Pi65msH8kAD0EWZsBK4qPE5YBVwDNgB1AJtlAmuR2tWWoPYAKxIcLHnSJj5wBHgL3A2Rh6540sdSpzDwIQqjpFTgTwmzSFh5uodexjDyDZgXN9M3makwEBEIzLIT8BpZggDEYzIungMPE3zrRTViOwBVwJqDLT1AJ+BZaE+jaE+kiM1bEZksKNAr6op0NYJbDf0aQr8/6jmSJz9umG9Au5pXB9ol0EMxsg/mJaR54bN6045GinGJi36bMxW2chrjhnLAqAf+AP81liuTYU9wBmDEi9jTDwz7N5ybSq0Aw8MqiBldjlKEWmzsRHY4lCkvajCcEcO6B4g8S1H3/MOIxcc/V4AHx2ScqlkcoZntFZPihKfMPRZDlTrW81mJPjGS4WcDtam8LG3GfiqJX+3w8hJx29+sPSRCjwy8mgNOSQVbWEW7gPf9dgqVAFjhgGNaZuNNUCNQZVMA5WW5DV6p2QWnuh5PFwRjAdMSLzP8htVekwYsmjndBiRBf7Doi+BWbANsFtlm4lFwHvgkeMxXodnWrX86NHY9jjdLrL7e2EesBc4pG+wPq1yq/VaPrSxedmtXR/eWnXR/9I18U/LkgZVv16TtrtqYLf29c5W4E2Rjwphyews1DVRuPZWc3lhMfCzRBPv9Az/0tAmueQDXurU6wBeA8MlmPkW+ntYc0ic6pG3QIv+uJQrHSXOTFAdmkPigz6MdCVgpNOHkcsJGLnkw0hfAkZ6fRi5ph8ijmvlOxJRzZpD4qs+jGRkZGRkEJVJJzZPxYka+IgAAAAASUVORK5CYII="></img>
+         {/* <BookmarkBorderIcon fontSize='small' /> */}
+         </ListItemIcon>
+        Bỏ Chặn người này!
+       </MenuItem> : <>
+       
+       <MenuItem className=' text-xs' onClick={()=>handleNotifiBlock(1)}>
           <ListItemIcon>
             <img className='w-5 h-5' src="data:image/png;base64,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"></img>
           {/* <BookmarkBorderIcon fontSize='small' /> */}
@@ -418,8 +430,8 @@ function UserWidget({ username,userId, profilePhotoUrl }) {
           </ListItemIcon>
           Chặn người này vinh vien
         </MenuItem>
-     
-        
+       </>
+    }
       </Menu>
           </Box>
         ) }
@@ -487,7 +499,7 @@ function UserWidget({ username,userId, profilePhotoUrl }) {
           <EditOutlined sx={{ color: main }} />
         </FlexBetween>
       </Box>
-      { isNotification && <NotificationBlockUser onClose={() => setIsNotification(false)} ref={notificationBlockRef} fullname ={username} userId={userId} time={time} />}
+      { isNotification && <NotificationBlockUser onClose={() => setIsNotification(false)} ref={notificationBlockRef} fullname ={username} userId={userId} time={time}  action={actionYou}/>}
     </WidgetWrapper>
   )
 }

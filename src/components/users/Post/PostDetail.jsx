@@ -81,6 +81,7 @@ function PostDetail({ onClose, postId }) {
     
           setImages(postData.images);
           setAuthor(postData.author);
+          console.log('ffffff', author);
           setIsAuthor(postData.author._id === info.userId);
           setIsLiked(Boolean(postData.likes.find((like) => like._id === info.userId)));
     

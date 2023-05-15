@@ -37,12 +37,12 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Check from '@mui/icons-material/Check';
-
+import { getTotalMsgNotification, listenMsgItemNotificationOfAUser } from '../../utils/firebase';
 
 
 function Header() {
 
-  const { auth } = useContext(AppContext);
+  const { auth, info } = useContext(AppContext);
 
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
@@ -51,26 +51,23 @@ function Header() {
   const isRegisterPage = location.pathname === '/register';
   const isSendMailPage = location.pathname === '/sendMail';
   const isSendOTP = location.pathname === '/forgot-password';
+  const [numMsgNotifi, setNumMsgNotifi] = useState(0);
   // const isComfirmOTP = location.pathname = '/comfirmOTP';
   // const isCreatePost = location.pathname === '/create-post';
-
-
-  useEffect(() => {
-    // const accessToken = localStorage.getItem('access_token');
-    //       // console.log('abc');
-    //       if (accessToken) {
-    //         setToken(accessToken);
-    //         const decodedToken = jwt.decode(accessToken);
-    //         setInfo(decodedToken)
-    //         grantAuth() 
-    //       }
-    // console.log('auth', auth)
-        },
-         [auth]);
 
      const handleMobileMenuToggle = () => {
           setIsMobileMenuToggled(!isMobileMenuToggled);
         };
+
+        useEffect(() => {
+          if(info){
+          // numNotification();
+          getTotalMsgNotification(info.userId, (quantity)=>{
+            setNumMsgNotifi(quantity);
+          });
+          
+        }
+        },[info]);
   return (
    <Container>
        {!isLoginPage && !isRegisterPage && !isSendMailPage && (
@@ -110,9 +107,15 @@ function Header() {
 
         </Link>
         <Link to="/setAvatar" > <ButtonHeader nameButton={'Create'}/></Link> 
-        <Link to="/chat" className='flex flex-col  items-center  text-white' > 
+        <Link to="/chat" className='flex flex-col  items-center  text-white relative'  > 
            <ChatIcon sx={{ fontSize: "22px", color:"white" }} />
            <ButtonHeader nameButton={'Chat'}/>
+           { numMsgNotifi >0 && 
+
+        <div className="absolute left-0 top-0 ">
+        <span className="relative bg-red-500 rounded-[100%] text-[10px] text-white px-[0.3rem] py-[0.1rem] left-2 top-0 ">{numMsgNotifi}</span>
+        </div>
+    }
         </Link> 
       <DropdownHeader />
       </div>

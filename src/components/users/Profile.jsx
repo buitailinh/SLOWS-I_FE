@@ -35,12 +35,13 @@ function Profile() {
  
   const getUser = async () => {
     if(id){
-      console.log('info', info)
+      // console.log('info', info)
       if(id === info.userId){
         navigate('/profile');
       } else{
      const response = await  api.get(`${inforUserRoute}/${id}`);
      const userData = response.data;
+     console.log('fffff', userData);
       if(response.status === 200){
         userData.fullname = userData.firstName + ' ' + userData.lastName;
         setUser(userData);
@@ -194,6 +195,8 @@ function Profile() {
               username={user.fullname}
               userId= {id}
               profilePhotoUrl={user.avatar}
+              status = { user.status}
+              actionYou = { user.actionYou}
             />
           )}
           <Box m="1rem 0" />

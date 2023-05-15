@@ -13,7 +13,7 @@ import {
     Twitter,
     LinkedIn,
   } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Search } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import UserAvatar from '../../components/users/styledComponents/UserAvatar';
@@ -21,6 +21,8 @@ import api from '../../utils/api';
 import { AppContext } from '../../utils/context';
 import { ChatUserRoute} from '../../utils/APIRoutes';
 import ListUserChat from './ListUserChat';
+import socket from '../../utils/socket';
+import { getMsgNotificationDetail } from '../../utils/firebase';
 
 
 
@@ -32,6 +34,9 @@ function SideBar() {
     const [searchInput, setSearchInput] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [isListOpen, setIsListOpen] = useState(false);
+    const [listMsg, setListMsg] = useState([]);
+    const { id } = useParams();
+    const [numNotifications, setNumNotifications] = useState([]);
    
     const { info } = useContext(AppContext);
     const classes = useStyles();
@@ -89,6 +94,63 @@ function SideBar() {
           setIsListOpen(false);
         }
       };
+
+    const getListMsg = async() =>{
+        const res = await api.get(ChatUserRoute);
+        if(res.status === 200){
+            const data = res.data.data;
+            setListMsg(data);
+        }
+    }
+
+    const numNotification = async(userId, msgId) =>{
+      const num = await  getMsgNotificationDetail(userId, msgId);
+      return num;
+  }
+
+  const fetchData = async () => {
+    const notifications = await Promise.all(
+      listMsg.map((msg) => numNotification(info.userId, msg._id))
+    );
+    setNumNotifications(notifications);
+
+    // console.log('dataaaa', notifications);
+  };
+
+  useEffect(() =>{
+    if(info)
+        getListMsg();
+    socket.on('recieve-msg',async(response)=>{
+      const isOneInArray = response.users.includes(info?.userId);
+      if(isOneInArray)
+        getListMsg();
+    } )
+}, [info]);
+
+
+  useEffect(() => {
+    if(info){
+      fetchData();
+
+      if(!id){
+        const index = numNotifications.indexOf(0);
+        if(listMsg.length !==0){
+        if(index>=0){
+          const msgId = listMsg[index];
+          // console.log('ton tai', msgId)
+          navigate(`/chat/${msgId._id}`);
+        } else{
+          const msgId = listMsg[0];
+          // console.log('ko ton tai', msgId)
+          navigate(`/chat/${msgId._id}`);
+        }
+      }
+      }
+    }
+    
+
+    
+  }, [listMsg]);
 
     
     useEffect(() => {
@@ -278,7 +340,7 @@ function SideBar() {
           display: 'none',
         },
       }}>
-       <ListUserChat />
+       <ListUserChat listMsg={listMsg} numNoti={numNotifications} />
         
       {/* <UserWidget username={auth?.fullName} profilePhotoUrl={auth?.avatar} /> */}
       {/* </div> */}

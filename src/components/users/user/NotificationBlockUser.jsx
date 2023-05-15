@@ -24,7 +24,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-function NotificationBlockUser({onClose, fullname, userId, time}) {
+function NotificationBlockUser({onClose, fullname, userId, time, action}) {
 
     const blockNotificationRef = useRef(null);
     const [isCreatePost, setIsCreatePost] = useState(false);
@@ -74,7 +74,11 @@ function NotificationBlockUser({onClose, fullname, userId, time}) {
         )
 
         if(status === 200 || status ===201){
-            navigate('/');
+            if(action){
+                window.location.reload();
+            }
+            else
+                navigate('/');
         }
     } 
     }
@@ -103,7 +107,7 @@ function NotificationBlockUser({onClose, fullname, userId, time}) {
         <div className="flex justify-center items-center">
           {/* <img className="mr-4" src="https://img.icons8.com/tiny-color/16/unfriend-male.png" alt="unfriend-male" /> */}
           <img className="mr-4" width="32" height="32" src="https://img.icons8.com/tiny-color/16/unfriend-male.png" alt="unfriend-male"/> 
-          <h2 className="text-2xl font-bold relative">Chặn người dùng:
+          <h2 className="text-2xl font-bold relative">{ action ? "Bỏ chặn người dùng:" : "Chặn người dùng:"}   
           </h2>
         </div>
         <button className="rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500" onClick={onClose}>
@@ -114,12 +118,20 @@ function NotificationBlockUser({onClose, fullname, userId, time}) {
         </button>
       </div>
 
-      <div className='flex justify-center items-center text-xl mx-4'>
+    { action ? 
+    <div className='flex justify-center items-center text-xl mx-4'>
+    <p>Bạn chắc chắn muốn bỏ chặn 
+       <span className='font-bold'> {fullname}</span>
+        </p>
+  </div>
+  : 
+  <div className='flex justify-center items-center text-xl mx-4'>
         <p>Bạn chắc chắn muốn chặn 
            <span className='font-bold'> {fullname}</span>
            {time ? ` với thời gian là: ${convertTimeToMinutes(time)}` : ' vĩnh viễn'}
             </p>
       </div>
+}
       <Box>
       </Box>
       <Box className=' flex justify-around items-center my-4'>
@@ -128,7 +140,7 @@ function NotificationBlockUser({onClose, fullname, userId, time}) {
 
       <Button
 
-onClick={onClose}
+        onClick={onClose}
           sx={{
             color: palette.background.alt,
             backgroundColor: palette.primary.main,
@@ -149,13 +161,14 @@ onClick={onClose}
             color: palette.background.alt,
             backgroundColor: palette.primary.main,
             borderRadius: "3rem",
-            marginX: '3rem'
+            marginX: '1rem',
+            whiteSpace: 'nowrap',
           }}
         >
           {loading ? (
             <CircularProgress sx={{ color: palette.neutral.dark }} size={15} />
           ) : (
-            "Chặn"
+           <span>  {action ? "Bỏ chặn" : "Chặn"} </span>
           )}
         </Button>
 

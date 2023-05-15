@@ -93,7 +93,9 @@ function HeaderPost({
       };
 
       const getRepositoryUser = async() =>{
-          const {data} = await api.get(`${FollowingRoute}/${followingId}`);
+
+        console.log('this ......', followingId);
+          const {data} = await api.get(`${FollowingRoute}/${followingId? followingId: false}`);
 
           if(followingId === data.creator){
             if( data.receiverStatus === 'Follower'){
@@ -121,7 +123,7 @@ function HeaderPost({
       useEffect(() =>{
         if(info.userId !== followingId)
         getRepositoryUser();
-      },[info])
+      },[info, followingId])
 
 
   return (

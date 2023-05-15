@@ -15,7 +15,7 @@ import {
     Info,
   } from "@mui/icons-material";
 import Styled from 'styled-components';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Search } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import UserAvatar from '../../components/users/styledComponents/UserAvatar';
@@ -23,6 +23,7 @@ import api from '../../utils/api';
 import { AppContext } from '../../utils/context';
 import { ChatUserRoute} from '../../utils/APIRoutes';
 import socket from '../../utils/socket';
+import { getMsgNotificationDetail } from '../../utils/firebase';
 
 
 function ListUserChat() {
@@ -32,6 +33,8 @@ function ListUserChat() {
     const { palette } = useTheme();
     const { dark, medium, main } = palette.neutral;
     const navigate = useNavigate();
+    const { id } = useParams();
+    const [numNotifications, setNumNotifications] = useState([]);
 
 
     const getListMsg = async() =>{
@@ -42,6 +45,11 @@ function ListUserChat() {
         }
     }
 
+    const numNotification = async(userId, msgId) =>{
+      const num = await  getMsgNotificationDetail(userId, msgId);
+      return num;
+  }
+
     useEffect(() =>{
         if(info)
             getListMsg();
@@ -51,6 +59,17 @@ function ListUserChat() {
             getListMsg();
         } )
     }, [info]);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const notifications = await Promise.all(
+          listMsg.map((msg) => numNotification(info.userId, msg._id))
+        );
+        console.log('dataaaa', notifications);
+        setNumNotifications(notifications);
+      };
+      fetchData();
+    }, [listMsg, info]);
   return (
     <Container >
          { listMsg.map((msg, index) =>(
@@ -60,9 +79,10 @@ function ListUserChat() {
                       backgroundColor: "#f2f2",
                     },
               }}
+              bgcolor={ msg._id === id ?  '#FFF5EE': numNotifications[index]>0? '#C6E2FF': ''}
               onClick={() => navigate(`/chat/${msg._id}`)}
           >
-            <FlexBetween gap="1rem">
+            <FlexBetween gap="1rem" >
               {/* <Twitter /> */}
               <UserAvatar image={msg.avatarRoom} size="30px" />
               <Box>
@@ -78,9 +98,9 @@ function ListUserChat() {
               </Box>
             </FlexBetween>
             <div className='flex w-5 h-5'>
-            { 2 >0 && 
+            { numNotifications[index]>0 && 
         <div class=" left-0 top-0 ">
-        <span class=" bg-slate-300 rounded-[100%] text-[10px] text-white px-[0.3rem] py-[0.1rem] left-2 top-0 ">{2}</span>
+        <span class=" bg-slate-300 rounded-[100%] text-[10px] text-white px-[0.3rem] py-[0.1rem] left-2 top-0 ">{numNotifications[index]}</span>
         </div>
     }
             </div>

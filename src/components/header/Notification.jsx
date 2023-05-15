@@ -71,7 +71,7 @@ function Notification() {
         numNotification();
 
         listenToNotificationsOfUser(info.userId, (notifications) => {
-          console.log(notifications);
+          // console.log(notifications);
           setNumNoti(numNoti+notifications.length);
         });
        
